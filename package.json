@@ -1,0 +1,26 @@
+{
+  "name": "workspace",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "pnpm run typecheck && pnpm -r --if-present run build",
+    "typecheck:libs": "tsc --build",
+    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
+        "dev:api": "cd artifacts/api-server && npm run dev",
+    "dev:web": "cd artifacts/imusic && npm run dev",
+    "dev": "npx concurrently \"npm run dev:api\" \"npm run dev:web\""
+  },
+  "private": true,
+  "devDependencies": {
+    "@esbuild/win32-x64": "0.27.3",
+    "@tailwindcss/oxide": "4.3.1",
+    "@tailwindcss/oxide-win32-x64-msvc": "4.3.1",
+    "concurrently": "^8.2.2",
+    "esbuild": "0.27.3",
+    "lightningcss": "1.32.0",
+    "lightningcss-win32-x64-msvc": "1.32.0",
+    "pnpm": "^9.12.3",
+    "prettier": "^3.8.3",
+    "typescript": "~5.9.3"
+  }
+}

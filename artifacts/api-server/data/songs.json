@@ -1,0 +1,53 @@
+[
+  {
+    "id": "1",
+    "title": "Tum Hi Ho",
+    "artist": "Arijit Singh",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    "cover": "https://example.com/covers/tumhiho.jpg",
+    "language": "Hindi",
+    "duration": 210,
+    "album": "Aashiqui 2"
+  },
+  {
+    "id": "2",
+    "title": "Maa Tujhe Salaam",
+    "artist": "A.R. Rahman",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    "cover": "https://example.com/covers/maatujhesalam.jpg",
+    "language": "Tamil",
+    "duration": 300,
+    "album": "Vande Mataram"
+  },
+  {
+    "id": "3",
+    "title": "Naatu Naatu",
+    "artist": "M.M. Keeravani",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+    "cover": "https://example.com/covers/naatu.jpg",
+    "language": "Telugu",
+    "duration": 200,
+    "album": "RRR"
+  },
+  {
+    "id": "4",
+    "title": "Chaiyya Chaiyya",
+    "artist": "Sukhwinder Singh",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+    "cover": "https://example.com/covers/chaiyya.jpg",
+    "language": "Hindi",
+    "duration": 250,
+    "album": "Dil Se"
+  },
+  {
+    "id": "5",
+    "title": "Aalap",
+    "artist": "Shreya Ghoshal",
+    "audio": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+    "cover": "https://example.com/covers/aalap.jpg",
+    "language": "Malayalam",
+    "duration": 230,
+    "album": "Film XYZ"
+  }
+  // ...more entries can be added similarly to reach a larger catalogue
+]

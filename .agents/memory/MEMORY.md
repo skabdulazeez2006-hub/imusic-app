@@ -1,0 +1,1 @@
+- [JioSaavn full stream URLs](jiosaavn-streams.md) — DES-ECB decrypt encrypted_media_url with key "38346591"; Node 24 needs NODE_OPTIONS=--openssl-legacy-provider

@@ -1,0 +1,438 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: iMusic Indian Cinema Songs API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: songs
+    description: Song operations
+  - name: albums
+    description: Album operations
+  - name: artists
+    description: Artist operations
+  - name: search
+    description: Search operations
+  - name: charts
+    description: Charts and trending
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /songs/search:
+    get:
+      operationId: searchSongs
+      tags: [songs]
+      summary: Search songs
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: language
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SongListResponse"
+
+  /songs/trending:
+    get:
+      operationId: getTrendingSongs
+      tags: [songs]
+      summary: Get trending songs
+      parameters:
+        - name: language
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Trending songs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SongListResponse"
+
+  /songs/{id}:
+    get:
+      operationId: getSong
+      tags: [songs]
+      summary: Get a song by ID with streaming URL
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Song details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SongDetail"
+        "404":
+          description: Song not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /albums/trending:
+    get:
+      operationId: getTrendingAlbums
+      tags: [albums]
+      summary: Get trending albums
+      parameters:
+        - name: language
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Trending albums
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlbumListResponse"
+
+  /albums/{id}:
+    get:
+      operationId: getAlbum
+      tags: [albums]
+      summary: Get album details with songs
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Album details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlbumDetail"
+        "404":
+          description: Album not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /artists/{id}:
+    get:
+      operationId: getArtist
+      tags: [artists]
+      summary: Get artist details and songs
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Artist details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtistDetail"
+        "404":
+          description: Artist not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /search:
+    get:
+      operationId: globalSearch
+      tags: [search]
+      summary: Search across songs, albums, and artists
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GlobalSearchResult"
+
+  /charts:
+    get:
+      operationId: getCharts
+      tags: [charts]
+      summary: Get featured charts and playlists
+      parameters:
+        - name: language
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Featured charts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChartsResponse"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    Song:
+      type: object
+      required: [id, name, artists, albumName, image, language, duration]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        artists:
+          type: array
+          items:
+            type: string
+        albumName:
+          type: string
+        image:
+          type: string
+        language:
+          type: string
+        duration:
+          type: integer
+        year:
+          type: ["string", "null"]
+
+    SongDetail:
+      type: object
+      required: [id, name, artists, albumName, image, language, duration, streamUrl]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        artists:
+          type: array
+          items:
+            type: string
+        albumName:
+          type: string
+        image:
+          type: string
+        language:
+          type: string
+        duration:
+          type: integer
+        year:
+          type: ["string", "null"]
+        streamUrl:
+          type: string
+        lyrics:
+          type: ["string", "null"]
+
+    SongListResponse:
+      type: object
+      required: [songs, total]
+      properties:
+        songs:
+          type: array
+          items:
+            $ref: "#/components/schemas/Song"
+        total:
+          type: integer
+
+    Album:
+      type: object
+      required: [id, name, artists, image, language, year, songCount]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        artists:
+          type: array
+          items:
+            type: string
+        image:
+          type: string
+        language:
+          type: string
+        year:
+          type: string
+        songCount:
+          type: integer
+
+    AlbumDetail:
+      type: object
+      required: [id, name, artists, image, language, year, songs]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        artists:
+          type: array
+          items:
+            type: string
+        image:
+          type: string
+        language:
+          type: string
+        year:
+          type: string
+        description:
+          type: ["string", "null"]
+        songs:
+          type: array
+          items:
+            $ref: "#/components/schemas/Song"
+
+    AlbumListResponse:
+      type: object
+      required: [albums]
+      properties:
+        albums:
+          type: array
+          items:
+            $ref: "#/components/schemas/Album"
+
+    Artist:
+      type: object
+      required: [id, name, image]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+        role:
+          type: ["string", "null"]
+
+    ArtistDetail:
+      type: object
+      required: [id, name, image, songs, albums]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+        bio:
+          type: ["string", "null"]
+        songs:
+          type: array
+          items:
+            $ref: "#/components/schemas/Song"
+        albums:
+          type: array
+          items:
+            $ref: "#/components/schemas/Album"
+
+    GlobalSearchResult:
+      type: object
+      required: [songs, albums, artists]
+      properties:
+        songs:
+          type: array
+          items:
+            $ref: "#/components/schemas/Song"
+        albums:
+          type: array
+          items:
+            $ref: "#/components/schemas/Album"
+        artists:
+          type: array
+          items:
+            $ref: "#/components/schemas/Artist"
+
+    Chart:
+      type: object
+      required: [id, name, image, language, songCount]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+        language:
+          type: string
+        songCount:
+          type: integer
+
+    ChartsResponse:
+      type: object
+      required: [charts]
+      properties:
+        charts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Chart"
