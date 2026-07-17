@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { PlayerProvider } from "@/context/PlayerContext";
 import { PlaylistProvider } from "@/context/PlaylistContext";
+import { setBaseUrl } from "@workspace/api-client-react";
 import NotFound from "@/pages/not-found";
 
 import Home from "@/pages/home";
@@ -12,6 +13,12 @@ import Album from "@/pages/album";
 import Artist from "@/pages/artist";
 import Charts from "@/pages/charts";
 import Playlist from "@/pages/playlist";
+
+// Set base URL for API requests
+const apiUrl = import.meta.env.VITE_API_URL;
+if (apiUrl) {
+  setBaseUrl(apiUrl);
+}
 
 const queryClient = new QueryClient();
 
