@@ -1,0 +1,4 @@
+{
+  "buildCommand": "pnpm --filter @workspace/imusic run build",
+  "outputDirectory": "artifacts/imusic/dist/public"
+}

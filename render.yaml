@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: imusic-app
+    runtime: node
+    buildCommand: pnpm run build
+    startCommand: pnpm --filter @workspace/api-server run start
+    envVars:
+      - key: NODE_ENV
+        value: production
