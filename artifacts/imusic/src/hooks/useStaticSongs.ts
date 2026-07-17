@@ -20,7 +20,8 @@ export const useStaticSongs = () => {
   return useQuery<Song[]>({
     queryKey: ['staticSongs'],
     queryFn: async () => {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/songs`);
+      const baseUrl = import.meta.env.VITE_API_URL || "";
+      const response = await fetch(`${baseUrl}/api/songs`);
       if (!response.ok) {
         throw new Error('Failed to fetch static songs');
       }
